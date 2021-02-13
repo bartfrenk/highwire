@@ -1,0 +1,4 @@
+setuptools==40.6.2
+wheel==0.32.3
+twine==1.12.1
+pyopenssl==19.0.0

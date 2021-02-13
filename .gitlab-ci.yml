@@ -1,0 +1,45 @@
+image: python:3.6.8-slim-stretch
+
+cache:
+  paths:
+    - .eggs/
+    - .cache/pip
+
+stages:
+  - qa
+  - publish
+
+test:
+  tags: [aws]
+  stage: qa
+  script:
+    - export PYTHONPATH=.:./src
+    - pip install --upgrade pip
+    - pip install --cache-dir $CI_PROJECT_DIR/.cache/pip -r requirements/package.txt
+    - pip install --cache-dir $CI_PROJECT_DIR/.cache/pip -r requirements/test.txt
+    - pytest
+
+pylint:
+  tags: [aws]
+  stage: qa
+  script:
+    - export PYTHONPATH=.:./src
+    - pip install --upgrade pip
+    - pip install --cache-dir $CI_PROJECT_DIR/.cache/pip -r requirements/package.txt
+    - pip install --cache-dir $CI_PROJECT_DIR/.cache/pip -r requirements/test.txt
+    - pylint src/apparatus test/test_apparatus
+
+pypi:
+  tags: [aws]
+  stage: publish
+  script:
+    - apt-get update && apt-get -y install git make
+    - git describe --tags > VERSION
+    - cat VERSION
+    - pip install --upgrade pip
+    - pip install --cache-dir $CI_PROJECT_DIR/.cache/pip -r requirements/publish.txt
+    - make build
+    - make publish
+  only:
+    refs:
+      - tags

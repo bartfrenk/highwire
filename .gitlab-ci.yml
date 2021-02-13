@@ -1,4 +1,4 @@
-image: python:3.6.8-slim-stretch
+image: python:3.7.8-slim-buster
 
 cache:
   paths:
@@ -10,7 +10,6 @@ stages:
   - publish
 
 test:
-  tags: [aws]
   stage: qa
   script:
     - export PYTHONPATH=.:./src
@@ -20,17 +19,15 @@ test:
     - pytest
 
 pylint:
-  tags: [aws]
   stage: qa
   script:
     - export PYTHONPATH=.:./src
     - pip install --upgrade pip
     - pip install --cache-dir $CI_PROJECT_DIR/.cache/pip -r requirements/package.txt
     - pip install --cache-dir $CI_PROJECT_DIR/.cache/pip -r requirements/test.txt
-    - pylint src/apparatus test/test_apparatus
+    - pylint src/highwire
 
 pypi:
-  tags: [aws]
   stage: publish
   script:
     - apt-get update && apt-get -y install git make

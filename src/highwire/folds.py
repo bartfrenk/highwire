@@ -1,4 +1,4 @@
-from wire.events import Event
+from highwire.events import Event
 
 
 def ema(factor: float):

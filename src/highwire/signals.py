@@ -3,8 +3,8 @@ from abc import ABC, abstractmethod
 from typing import Generic, Optional, TypeVar, List, Any, Union, Callable
 from weakref import WeakMethod
 
-from wire.events import Event, project
-from wire import events, exceptions
+from highwire.events import Event, project
+from highwire import events, exceptions
 
 R = TypeVar("R")
 S = TypeVar("S")
@@ -99,11 +99,13 @@ class Project(Generic[R, S], Signal[S]):
     def get(self) -> Optional[S]:
         if self._current is None:
             return None
+        # pylint: disable=no-member
         return self._current.value  # type: ignore
 
     def _update(self, new: Event[R]) -> S:
         self._current = events.project(new, self._fn)
         self._notify(self._current)
+        # pylint: disable=no-member
         return self._current.value  # type: ignore
 
 

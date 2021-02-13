@@ -1,4 +1,4 @@
 # pylint: disable=unused-import
-from wire.events import Event, project
-from wire.signals import Signal, LastEvent, Select
-from wire.streams import Stream, AsyncStream
+from highwire.events import Event, project
+from highwire.signals import Signal, LastEvent, Select
+from highwire.streams import Stream, AsyncStream

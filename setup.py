@@ -37,12 +37,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
     ],
-    install_requires=[
-        "miniscule>=0.4.0,<2",
-        "retry>0.9,<2",
-        "pydantic==1.*",
-        "smart-open[s3]==4.*",
-    ],
+    install_requires=["pydantic==1.*"],
     data_files=[(".", ["VERSION"])],
     setup_requires=["pytest-runner"],
     tests_require=["pytest>=4"],

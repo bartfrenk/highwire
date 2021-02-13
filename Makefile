@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 .PHONY: build clean docs help publish test report .check-version
 
-NAME := emporium
+NAME := highwire
 
 help: ## Show this help
 	@echo "${NAME}"
@@ -34,7 +34,8 @@ test: ## Test the package
 	@python setup.py pytest
 
 report: ## Report coverage
-	@-pylint src/emporium test/test_emporium
+	-@mypy src
+	-@pylint src
 	@coverage run --source src -m pytest
 	@coverage report -m
 

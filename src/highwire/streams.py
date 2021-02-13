@@ -1,15 +1,6 @@
-from typing import (
-    Any,
-    AsyncIterator,
-    Callable,
-    Iterator,
-    Mapping,
-    Optional,
-    Tuple,
-    TypeVar,
-)
+from typing import Any, AsyncIterator, Callable, Iterator, Mapping, Optional, Tuple, TypeVar
 
-from wire import Event
+from highwire.events import Event
 
 S = TypeVar("S")
 

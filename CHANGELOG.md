@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- The abstract base class for samplers, i.e., values that are computed by
+  repeatedly sampling from a function over time.
+- The `MovingAverage` sampler.
+
 ## [v0.2.0] - 2021-03-11
 
 ### Added

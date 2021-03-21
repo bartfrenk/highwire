@@ -9,7 +9,7 @@ T = TypeVar("T")
 
 class Event(Generic[S], BaseModel):
     value: S
-    received_at: int
+    received_at: Optional[int]
     occurred_at: int
 
 

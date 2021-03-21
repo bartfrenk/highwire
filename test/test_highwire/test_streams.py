@@ -1,3 +1,4 @@
+import pytest
 from typing import TypeVar, Optional
 from highwire.streams import keyed_merge
 from highwire.events import Event
@@ -23,7 +24,7 @@ def event(value: X, time: int):
 
 
 class TestKeyedMerge:
-    def test_single_stream_with_tick(self):
+    def test_infinite_single_stream_with_tick(self):
         stream = keyed_merge({"x": constant_stream("x", 6)}, ("tick", 2))
         assert next(stream) == ("x", event("x", 0))
         assert next(stream) == ("tick", event(None, 2))
@@ -31,3 +32,12 @@ class TestKeyedMerge:
         assert next(stream) == ("x", event("x", 6))
         assert next(stream) == ("tick", event(None, 6))
         assert next(stream) == ("tick", event(None, 8))
+
+    def test_finite_single_stream_with_tick(self):
+        stream = keyed_merge({"x": constant_stream("x", 6, 2)}, ("tick", 2))
+        assert next(stream) == ("x", event("x", 0))
+        assert next(stream) == ("tick", event(None, 2))
+        assert next(stream) == ("tick", event(None, 4))
+        assert next(stream) == ("x", event("x", 6))
+        with pytest.raises(StopIteration):
+            assert next(stream) == ("tick", event(None, 6))

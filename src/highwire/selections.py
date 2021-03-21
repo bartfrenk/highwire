@@ -18,6 +18,6 @@ def maximum(x: Event[float], y: Event[float]) -> Event[float]:
 
 
 def first(x: Event[S], y: Event[S]) -> Event[S]:
-    if x.occurred_at <= y.occurred_at:
+    if x.time <= y.time:
         return x
     return y

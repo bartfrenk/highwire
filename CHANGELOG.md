@@ -5,6 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.4.0] - 2021-03-21
+
+### Changed
+
+- Replaced Event fields `occurred_at` and `received_at` by a single `time`
+  field, and an optional metadata map.
+
 ## [v0.3.0] - 2021-03-20
 
 ### Added

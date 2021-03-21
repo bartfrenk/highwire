@@ -12,14 +12,14 @@ def constant_stream(x: X, delay: int, n: Optional[int] = None):
         while True:
             if n is not None and k >= n:
                 return
-            yield Event(value=x, occurred_at=k * delay, received_at=k * delay)
+            yield Event(value=x, time=k * delay)
             k += 1
 
     return it()
 
 
 def event(value: X, time: int):
-    return Event(value=value, occurred_at=time, received_at=time)
+    return Event(value=value, time=time)
 
 
 class TestKeyedMerge:

@@ -24,7 +24,7 @@ def arrivals(
     it = it or nats()
     current = start
     for i in it:
-        yield Event(value=i, occurred_at=current, received_at=current)
+        yield Event(value=i, time=current)
         current += delay()
 
 
@@ -42,7 +42,7 @@ def merge(*streams: Stream[Any]) -> Stream[Any]:
                 if i_ is None:
                     i_ = i
                 else:
-                    if pending[i_].occurred_at > pending[i].occurred_at:
+                    if pending[i_].time > pending[i].time:
                         i_ = i
         return i_
 
@@ -77,7 +77,7 @@ def keyed_merge(
                 if k_ is None:
                     k_ = k
                 else:
-                    if pending[k_].occurred_at > pending[k].occurred_at:
+                    if pending[k_].time > pending[k].time:
                         k_ = k
         if has_event:
             return k_
@@ -88,18 +88,18 @@ def keyed_merge(
     if k is None:
         return
     yield (k, pending[k])
-    current_tick = pending[k].occurred_at
+    current_tick = pending[k].time
     pending[k] = head(streams[k])
     if ticks:
-        occurred_at = current_tick + ticks[1]
-        pending[ticks[0]] = Event(value=None, received_at=occurred_at, occurred_at=occurred_at)
+        time = current_tick + ticks[1]
+        pending[ticks[0]] = Event(value=None, time=time)
     while True:
         k = first_by_index(pending)
         if k is None:
             break
         yield (k, pending[k])
         if ticks and k == ticks[0]:
-            occurred_at = pending[k].occurred_at + ticks[1]
-            pending[k] = Event(value=None, received_at=occurred_at, occurred_at=occurred_at)
+            time = pending[k].time + ticks[1]
+            pending[k] = Event(value=None, time=time)
         else:
             pending[k] = head(streams[k])

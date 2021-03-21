@@ -130,9 +130,9 @@ class Select(Signal[S]):
             updated = new
 
         self._events.append(new)
-        before = new.occurred_at - self._keep
+        before = new.time - self._keep
         self._events.take(before)
-        if updated.occurred_at < before:
+        if updated.time < before:
             updated = self._recompute()
         if updated != self._current:
             self._current = updated
@@ -197,7 +197,7 @@ class Sum(Signal[Number]):
     def _update(self, new: Event[Number]) -> Number:
         self._current += new.value
         self._events.append(new)
-        before = new.occurred_at - self._keep
+        before = new.time - self._keep
         dropped = self._events.take(before)
         for event in dropped:
             self._current -= event.value

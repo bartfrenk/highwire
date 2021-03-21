@@ -1,5 +1,5 @@
 from collections import deque
-from typing import Callable, Deque, Generic, Iterator, List, Optional, TypeVar
+from typing import *  # pylint: disable=wildcard-import, unused-wildcard-import
 from pydantic import BaseModel
 
 R = TypeVar("R")
@@ -9,8 +9,8 @@ T = TypeVar("T")
 
 class Event(Generic[S], BaseModel):
     value: S
-    received_at: Optional[int]
-    occurred_at: int
+    time: int
+    metadata: Optional[MutableMapping[str, Any]]
 
 
 Project = Callable[[Event[S]], T]
@@ -19,7 +19,7 @@ Fold = Callable[[T, Event[S]], T]
 
 
 def project(event: Event[R], fn: Project[R, S]) -> Event[S]:
-    return Event(value=fn(event), received_at=event.received_at, occurred_at=event.occurred_at)
+    return Event(value=fn(event), time=event.time)
 
 
 class Queue(Generic[S]):
@@ -47,7 +47,7 @@ class Queue(Generic[S]):
     def take(self, before: int) -> List[Event[S]]:
         head = self.pop()
         dropped = []
-        while head and head.occurred_at < before:
+        while head and head.time < before:
             dropped.append(head)
             head = self.pop()
         if head is not None:

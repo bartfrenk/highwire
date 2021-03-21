@@ -12,7 +12,7 @@ Y = TypeVar("Y")
 async def tick(start: int, delay: dt.timedelta) -> AsyncStream[int]:
     current = start
     while True:
-        yield Event(value=None, occurred_at=current, received_at=current)
+        yield Event(value=None, time=current)
         await asyncio.sleep(delay.total_seconds())
         current += round(delay.total_seconds() * 1000)
 

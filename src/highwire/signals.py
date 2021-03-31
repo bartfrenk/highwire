@@ -1,15 +1,14 @@
-from datetime import timedelta
 from abc import ABC, abstractmethod
-from typing import Generic, Optional, TypeVar, List, Any, Union, Callable
+from datetime import timedelta
+from typing import Any, Callable, Generic, List, Optional, Union
 from weakref import WeakMethod
 
-from highwire.events import Event, project
 from highwire import events, exceptions
+from highwire.events import Event, project
+from highwire.variables import R, S, T
 
-R = TypeVar("R")
-S = TypeVar("S")
-T = TypeVar("T")
 
+Tick = Event[Optional[int]]
 
 Subscription = Any
 
@@ -38,6 +37,12 @@ class Signal(Generic[T], ABC):
 
     def __sub__(self, other):
         return Difference(self, other)
+
+
+class Sampler(Signal[T]):
+    @abstractmethod
+    def sample(self, tick: Optional[Tick] = None) -> None:
+        pass
 
 
 class BinaryOperation(Signal[S]):

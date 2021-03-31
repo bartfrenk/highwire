@@ -1,10 +1,7 @@
 from collections import deque
 from typing import *  # pylint: disable=wildcard-import, unused-wildcard-import
 from pydantic import BaseModel
-
-R = TypeVar("R")
-S = TypeVar("S")
-T = TypeVar("T")
+from highwire.variables import R, S, T
 
 
 class Event(Generic[S], BaseModel):

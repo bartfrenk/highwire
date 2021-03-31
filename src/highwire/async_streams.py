@@ -1,12 +1,10 @@
 import asyncio
 import datetime as dt
-from typing import TypeVar, Any
+from typing import Any
 
 from highwire.events import Event
 from highwire.streams import AsyncStream
-
-X = TypeVar("X")
-Y = TypeVar("Y")
+from highwire.variables import T
 
 
 async def tick(start: int, delay: dt.timedelta) -> AsyncStream[int]:
@@ -17,7 +15,7 @@ async def tick(start: int, delay: dt.timedelta) -> AsyncStream[int]:
         current += round(delay.total_seconds() * 1000)
 
 
-async def merge(x: AsyncStream[X], y: asyncio.Queue) -> AsyncStream[Any]:
+async def merge(t: AsyncStream[T], y: asyncio.Queue) -> AsyncStream[Any]:
     queue: asyncio.Queue = asyncio.Queue()
 
     async def insert_it(z):
@@ -29,7 +27,7 @@ async def merge(x: AsyncStream[X], y: asyncio.Queue) -> AsyncStream[Any]:
             e = await z.get()
             await queue.put(e)
 
-    asyncio.create_task(insert_it(x))
+    asyncio.create_task(insert_it(t))
     asyncio.create_task(insert_queue(y))
 
     while True:

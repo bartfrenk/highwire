@@ -1,8 +1,7 @@
 from typing import Any, AsyncIterator, Callable, Iterator, Mapping, Optional, Tuple, TypeVar
 
 from highwire.events import Event
-
-S = TypeVar("S")
+from highwire.variables import S
 
 AsyncStream = AsyncIterator[Event[S]]
 Stream = Iterator[Event[S]]

@@ -8,7 +8,7 @@ from highwire.events import Event, project
 from highwire.variables import R, S, T
 
 
-Tick = Event[Optional[int]]
+Tick = Event[object]
 
 Subscription = Any
 
@@ -41,7 +41,7 @@ class Signal(Generic[T], ABC):
 
 class Sampler(Signal[T]):
     @abstractmethod
-    def sample(self, tick: Optional[Tick] = None) -> None:
+    def sample(self, tick: Tick) -> None:
         pass
 
 

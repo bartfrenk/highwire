@@ -237,3 +237,7 @@ class Crossing(Signal[Number]):
             else:
                 self._current = 0
             self._previous = new.value
+
+
+def Crossover(x: Signal[Number], y: Signal[Number]) -> Signal[Number]:
+    return Crossing(x - y, 0)

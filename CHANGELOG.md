@@ -5,6 +5,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Changed
+
+- Require `tick` for sample method of samplers
+
+## Added
+
+- Signals `Crossing` and `Crossover`, that indicate when a signal crosses a
+  threshold, or when one signal crosses another.
+
 ## [v0.4.0] - 2021-03-21
 
 ### Changed

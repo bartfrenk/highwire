@@ -199,7 +199,7 @@ class Sum(Signal[Number]):
     def get(self) -> Optional[Number]:
         return self._current
 
-    def _update(self, new: Event[Number]) -> Number:
+    def _update(self, new: Event[Number]) -> None:
         self._current += new.value
         self._events.append(new)
         before = new.time - self._keep
@@ -207,4 +207,33 @@ class Sum(Signal[Number]):
         for event in dropped:
             self._current -= event.value
         self._notify(project(new, lambda _: self._current))
+
+
+class Crossing(Signal[Number]):
+    _previous: Optional[Number]
+    _current: Optional[Number]
+
+    def __init__(self, signal: Signal[Number], threshold: Number):
+        super().__init__()
+        self._threshold = threshold
+        self._previous = None
+        self._current = None
+        self._signal = signal
+        signal.subscribe(self._update)
+
+    def get(self) -> Optional[Number]:
         return self._current
+
+    def _update(self, new: Event[Number]) -> None:
+        if new.value == self._threshold or new.value is None:
+            self._current = 0
+        else:
+            if self._previous is None:
+                self._current = 0
+            elif self._previous < self._threshold and self._threshold < new.value:
+                self._current = 1
+            elif new.value < self._threshold and self._threshold < self._previous:
+                self._current = -1
+            else:
+                self._current = 0
+            self._previous = new.value

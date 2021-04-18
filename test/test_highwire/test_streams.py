@@ -1,8 +1,9 @@
-import pytest
-from typing import TypeVar, Optional
-from highwire.streams import keyed_merge
-from highwire.events import Event
+from typing import Optional, TypeVar
 
+import pytest
+
+from highwire.events import Event
+from highwire.streams import keyed_merge
 
 X = TypeVar("X")
 

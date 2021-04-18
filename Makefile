@@ -33,7 +33,7 @@ build: .check-version
 test: ## Test the package
 	@python setup.py pytest
 
-report: ## Report coverage
+qa: ## Report coverage
 	-@mypy src
 	-@pylint src
 	@coverage run --source src -m pytest

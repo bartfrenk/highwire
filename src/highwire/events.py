@@ -1,3 +1,4 @@
+from __future__ import annotations
 from collections import deque
 from typing import *  # pylint: disable=wildcard-import, unused-wildcard-import
 from pydantic import BaseModel
@@ -8,6 +9,10 @@ class Event(Generic[S], BaseModel):
     value: S
     time: int
     metadata: Optional[MutableMapping[str, Any]]
+
+    def replace(self, value: T) -> Event[T]:
+        # pylint: disable=no-member
+        return Event(value=value, time=self.time, metadata=self.metadata)
 
 
 Project = Callable[[Event[S]], T]

@@ -34,17 +34,17 @@ async def merge(t: AsyncStream[T], y: asyncio.Queue) -> AsyncStream[Any]:
         yield await queue.get()
 
 
-async def batch(t: AsyncStream[T], size: int) -> AsyncStream[List[T]]:
-    batch = []
+async def window(t: AsyncStream[T], size: int) -> AsyncStream[List[T]]:
+    window = []
     event = None
     async for event in t:
-        batch.append(event.value)  # type: ignore
-        if len(batch) == size:
-            yield event.replace(batch)  # type: ignore
+        window.append(event.value)  # type: ignore
+        if len(window) == size:
+            yield event.replace(window)  # type: ignore
             event = None
-        if len(batch) > size:
-            batch.pop(0)
-            yield event.replace(batch)  # type: ignore
+        if len(window) > size:
+            window.pop(0)
+            yield event.replace(window)  # type: ignore
             event = None
     if event is not None:
-        yield event.replace(batch)
+        yield event.replace(window)

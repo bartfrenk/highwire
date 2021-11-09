@@ -1,6 +1,6 @@
 import asyncio
 import datetime as dt
-from typing import Any
+from typing import Any, List
 
 from highwire.events import Event
 from highwire.streams import AsyncStream
@@ -32,3 +32,19 @@ async def merge(t: AsyncStream[T], y: asyncio.Queue) -> AsyncStream[Any]:
 
     while True:
         yield await queue.get()
+
+
+async def batch(t: AsyncStream[T], size: int) -> AsyncStream[List[T]]:
+    batch = []
+    event = None
+    async for event in t:
+        batch.append(event.value)  # type: ignore
+        if len(batch) == size:
+            yield event.replace(batch)  # type: ignore
+            event = None
+        if len(batch) > size:
+            batch.pop(0)
+            yield event.replace(batch)  # type: ignore
+            event = None
+    if event is not None:
+        yield event.replace(batch)

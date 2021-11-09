@@ -40,6 +40,6 @@ setuptools.setup(
     install_requires=["pydantic==1.*"],
     data_files=[(".", ["VERSION"])],
     setup_requires=["pytest-runner"],
-    tests_require=["pytest>=4"],
+    tests_require=["pytest>=4", "pytest-asyncio>=0.16.0"],
     packages=setuptools.find_packages("src"),
 )

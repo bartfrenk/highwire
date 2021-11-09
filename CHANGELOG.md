@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.7.0] - 2021-11-09
+
 ## Added
 
 - Function `window` for async streams that returns a stream of sliding windows.

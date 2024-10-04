@@ -8,5 +8,6 @@ dist/
 .cache/
 .env
 .coverage
+VERSION
 _local
 docs/build

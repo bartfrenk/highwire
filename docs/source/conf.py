@@ -1,7 +1,7 @@
 # See http://www.sphinx-doc.org/en/master/config
-project = "apparatus"
-copyright = "2019, Greenhouse AI team"
-author = "Greenhouse AI team"
+project = "highwire"
+copyright = "2024, Bart Frenk"
+author = "Bart Frenk"
 
 import os
 import sys

@@ -1,8 +1,8 @@
 API reference
 =============
 
-apparatus
----------
+highwire
+--------
 
-.. automodule:: apparatus
+.. automodule:: highwire
    :members:

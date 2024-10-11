@@ -11,6 +11,7 @@ distribution = true
 test = "pytest tests"
 lint = "pyright src tests"
 build-docs = "sphinx-build docs/source docs/build"
+set-version = {shell = "pdm version $(git describe --tags | sed -n -r 's/v([^-]+).*/\\1/p')"}
 
 [tool.pdm.package-dir]
 highwire = "src/highwire"

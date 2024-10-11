@@ -15,8 +15,14 @@ set-version = {shell = "pdm version $(git describe --tags | sed -n -r 's/v([^-]+
 qa.composite = ["test", "lint"]
 qa.keep_going = true
 
+[tool.pdm.build]
+source-includes = ["docs/source/description.rst"]
+
 [tool.pdm.package-dir]
 highwire = "src/highwire"
+
+[tool.pdm.build.wheel-data]
+data = ["docs/source/description.rst"]
 
 [project]
 name = "highwire"

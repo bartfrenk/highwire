@@ -12,27 +12,20 @@ test = "pytest tests"
 lint = "pyright src tests"
 build-docs = "sphinx-build docs/source docs/build"
 set-version = {shell = "pdm version $(git describe --tags | sed -n -r 's/v([^-]+).*/\\1/p')"}
+qa.composite = ["test", "lint"]
+qa.keep_going = true
 
 [tool.pdm.package-dir]
 highwire = "src/highwire"
 
-[tool.pdm.dev-dependencies]
-dev = [
-    "pytest>=8.3.3",
-    "pytest-asyncio>=0.24.0",
-    "pyright>=1.1.384",
-    "sphinx>=8.1.0",
-    "sphinx-rtd-theme>=3.0.1",
-]
 [project]
 name = "highwire"
 version = "0.7.0"
-description = ""
+description = "A simple FRP library"
 authors = [
     {name = "Bart Frenk", email = "bart.frenk@gmail.com"},
 ]
 dependencies = [
-    "setuptools>=75.1.0",
     "pydantic==2.*",
 ]
 requires-python = ">=3.10"
@@ -49,6 +42,18 @@ classifiers = [
 [project.urls]
 Homepage = "https://gitlab.com/greenhousegroup/ai/libraries/highwire/"
 
+[project.optional-dependencies]
+lint = [
+    "pyright>=1.1.384",
+]
+docs = [
+    "sphinx>=8.1.0",
+    "sphinx-rtd-theme>=3.0.1",
+]
+test = [
+    "pytest>=8.3.3",
+    "pytest-asyncio>=0.24.0",
+]
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"

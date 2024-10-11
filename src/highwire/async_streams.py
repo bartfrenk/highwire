@@ -7,7 +7,7 @@ from highwire.streams import AsyncStream
 from highwire.variables import T
 
 
-async def tick(start: int, delay: dt.timedelta) -> AsyncStream[int]:
+async def tick(start: int, delay: dt.timedelta) -> AsyncStream[None]:
     current = start
     while True:
         yield Event(value=None, time=current)

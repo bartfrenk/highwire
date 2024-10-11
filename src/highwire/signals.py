@@ -7,7 +7,6 @@ from highwire import events, exceptions
 from highwire.events import Event, project
 from highwire.variables import R, S, T
 
-
 Tick = Event[object]
 
 Subscription = Any
@@ -91,23 +90,23 @@ class LastEvent(Signal[S]):
         return self._current.value  # type: ignore
 
 
-class Project(Generic[R, S], Signal[S]):
-    _current: Optional[Event[S]]
+class Project(Generic[S, T], Signal[T]):
+    _current: Optional[Event[T]]
 
-    def __init__(self, fn: events.Project[R, S], signal: Signal[R]):
+    def __init__(self, fn: events.Project[S, T], signal: Signal[S]):
         super().__init__()
         self._current = None
         self._fn = fn
         self._signal = signal
         signal.subscribe(self._update)
 
-    def get(self) -> Optional[S]:
+    def get(self) -> Optional[T]:
         if self._current is None:
             return None
         # pylint: disable=no-member
         return self._current.value  # type: ignore
 
-    def _update(self, new: Event[R]) -> S:
+    def _update(self, new: Event[S]) -> T:
         self._current = events.project(new, self._fn)
         self._notify(self._current)
         # pylint: disable=no-member

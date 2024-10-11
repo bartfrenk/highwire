@@ -1,17 +1,17 @@
 from __future__ import annotations
 from collections import deque
-from typing import *  # pylint: disable=wildcard-import, unused-wildcard-import
-from pydantic import BaseModel
+from typing import *  # type: ignore
 from highwire.variables import R, S, T
+from dataclasses import dataclass
 
 
-class Event(Generic[S], BaseModel):
+@dataclass
+class Event(Generic[S]):
     value: S
     time: int
-    metadata: Optional[MutableMapping[str, Any]]
+    metadata: Optional[MutableMapping[str, Any]] = None
 
     def replace(self, value: T) -> Event[T]:
-        # pylint: disable=no-member
         return Event(value=value, time=self.time, metadata=self.metadata)
 
 

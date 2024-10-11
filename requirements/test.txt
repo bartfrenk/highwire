@@ -1,6 +1,0 @@
-pytest==6.2.5
-coverage==4.5.3
-black==19.3b0
-pylint==2.3.1
-mock==3.0.5
-pytest-asyncio==0.16.0

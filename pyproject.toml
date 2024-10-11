@@ -1,5 +1,39 @@
 [tool.black]
-line-length = 96
+line-length = 99
 
+[tool.isort]
+line-length = 99
 
+[tool.pdm]
+distribution = true
 
+[tool.pdm.package-dir]
+highwire = "src/highwire"
+[project]
+name = "highwire"
+version = "0.7.0"
+description = ""
+authors = [
+    {name = "Bart Frenk", email = "bart.frenk@gmail.com"},
+]
+dependencies = [
+    "setuptools>=75.1.0",
+    "pydantic==2.*",
+]
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+keywords = [""]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3",
+]
+
+[project.urls]
+Homepage = "https://gitlab.com/greenhousegroup/ai/libraries/highwire/"
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"

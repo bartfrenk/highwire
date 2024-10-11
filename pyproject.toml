@@ -46,7 +46,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://gitlab.com/greenhousegroup/ai/libraries/highwire/"
+Homepage = "https://github.com/bartfrenk/highwire/"
 
 [project.optional-dependencies]
 lint = [
